@@ -12,15 +12,6 @@ import { Cart } from "src/carts/carts.model";
 import { OneToMany } from "typeorm";
 import { Order } from "src/orders/orders.model";
 
-// interface UserCreationAttrs {
-//   id: number;
-//   name: string;
-//   email: string;
-//   password: string;
-//   lastLogin: Date;
-//   role: string;
-// }
-
 @Entity({ name: "users" })
 export class User {
   @ApiProperty({ example: "1", description: "unique id" })

@@ -5,6 +5,7 @@ import { Collection } from "typeorm";
 import { ManyToOne } from "typeorm";
 import { JoinColumn } from "typeorm";
 import { ProductCategories } from "src/product-categories/product-categories.entity";
+import { Media } from "../media/media.entity";
 
 @Entity({ name: "products" })
 export class Product {
@@ -61,4 +62,6 @@ export class Product {
   )
   @JoinColumn({ name: "category_id" })
   product_category: ProductCategories;
+  @OneToMany(() => Media, (media) => media.productId)
+  media: Media[];
 }
