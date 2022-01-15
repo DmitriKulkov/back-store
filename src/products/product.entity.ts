@@ -4,6 +4,7 @@ import { Stock } from "src/stocks/stock.entity";
 import { Collection } from "typeorm";
 import { ManyToOne } from "typeorm";
 import { JoinColumn } from "typeorm";
+import { ProductCategories } from "src/product-categories/product-categories.entity";
 
 @Entity({ name: "products" })
 export class Product {
@@ -53,4 +54,11 @@ export class Product {
   @ManyToOne(() => Collection, (collection) => collection.products)
   @JoinColumn({ name: "collection_id" })
   collection: Collection;
+
+  @ManyToOne(
+    () => ProductCategories,
+    (product_category) => product_category.products,
+  )
+  @JoinColumn({ name: "category_id" })
+  product_category: ProductCategories;
 }
