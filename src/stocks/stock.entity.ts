@@ -10,6 +10,7 @@ import { Color, Size } from "src/enums";
 import { Product } from "src/products/product.entity";
 import { OneToMany } from "typeorm";
 import { OrderItems } from "src/order-items/order-items.entity";
+import { CartItems } from "src/cart-items/cart-items.entity";
 
 @Entity({ name: "stocks" })
 export class Stock {
@@ -38,4 +39,7 @@ export class Stock {
 
   @OneToMany(() => OrderItems, (order_items) => order_items.stock)
   order_items: OrderItems[];
+
+  @OneToMany(() => CartItems, (cart_items) => cart_items.stock)
+  cart_items: CartItems[];
 }

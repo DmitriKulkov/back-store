@@ -1,5 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { CartItems } from "src/cart-items/cart-items.entity";
 import { User } from "src/users/user.entity";
+import { OneToMany } from "typeorm";
 import { JoinColumn } from "typeorm";
 import { OneToOne } from "typeorm";
 import { Entity, PrimaryGeneratedColumn } from "typeorm";
@@ -10,14 +12,10 @@ export class Cart {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @ApiProperty({ example: "1", description: "User Id" })
-  // @Column({
-  //   nullable: false,
-  //   name: "user_id",
-  // })
-  // userId: number;
-
   @OneToOne(() => User)
   @JoinColumn({ name: "user_id" })
   user: User;
+
+  @OneToMany(() => CartItems, (cart_items) => cart_items.cart)
+  cart_items: CartItems[];
 }
