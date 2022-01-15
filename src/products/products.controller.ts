@@ -1,7 +1,15 @@
-import { Controller, Get, Put, Body, Delete, Param } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Put,
+  Body,
+  Delete,
+  Param,
+  Post,
+} from "@nestjs/common";
 import { ProductService } from "./products.service";
 
-@Controller("product")
+@Controller("products")
 export class ProductsController {
   constructor(private productService: ProductService) {}
 
@@ -10,9 +18,19 @@ export class ProductsController {
     return this.productService.getAll();
   }
 
+  @Get("/sellable")
+  getAllSellable() {
+    return this.productService.getAllSellable();
+  }
+
   @Get("/:id")
   getOne(@Param("id") id: number) {
     return this.productService.getOne(id);
+  }
+
+  @Post()
+  create(@Body() dto) {
+    return this.productService.create(dto);
   }
 
   @Put()
@@ -20,7 +38,7 @@ export class ProductsController {
     return this.productService.update(dto);
   }
 
-  @Delete()
+  @Delete("/:id")
   delete(@Param("id") id: number) {
     return this.productService.delete(id);
   }
