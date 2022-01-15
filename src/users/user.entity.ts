@@ -8,15 +8,6 @@ import {
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRole } from "src/enums";
 
-// interface UserCreationAttrs {
-//   id: number;
-//   name: string;
-//   email: string;
-//   password: string;
-//   lastLogin: Date;
-//   role: string;
-// }
-
 @Entity({ name: "users" })
 export class User {
   @ApiProperty({ example: "1", description: "unique id" })
@@ -26,10 +17,6 @@ export class User {
   @ApiProperty({ example: "user@mail.ru", description: "Email" })
   @Column({ type: "varchar", unique: true })
   email: string;
-
-  // @ApiProperty({ example: "MegaKiller777", description: "User Name" })
-  // @Column({ type: DataType.STRING, unique: true, allowNull: false })
-  // name: string;
 
   @ApiProperty({ example: "12345678", description: "Password" })
   @Column({ type: "varchar", nullable: true })
