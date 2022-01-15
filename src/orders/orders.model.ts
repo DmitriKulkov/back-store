@@ -9,6 +9,17 @@
 // import { ApiProperty } from "@nestjs/swagger";
 // import { User } from "src/users/users.model";
 
+import { ApiProperty } from "@nestjs/swagger";
+import { User } from "src/users/user.entity";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+
 // interface OrdersCreationAttrs {
 //   id: number;
 //   userId: number;
@@ -23,89 +34,92 @@
 //   shipping: number;
 // }
 
-// @Table({ tableName: "orders" })
-// export class Order extends Model<Order, OrdersCreationAttrs> {
-//   @ApiProperty({ example: "1", description: "Unique Id" })
-//   @Column({
-//     type: DataType.INTEGER,
-//     unique: true,
-//     autoIncrement: true,
-//     primaryKey: true,
-//   })
-//   id: number;
+@Entity({ name: "orders" })
+export class Order {
+  @ApiProperty({ example: "1", description: "Unique Id" })
+  @PrimaryGeneratedColumn()
+  id: number;
 
-//   @ApiProperty({ example: "1", description: "User Id" })
-//   @ForeignKey(() => User)
-//   @Column({
-//     type: DataType.INTEGER,
-//     allowNull: false,
-//   })
-//   userId: number;
+  // @ApiProperty({ example: "1", description: "User Id" })
+  // @ForeignKey(() => User)
+  // @Column({
+  //   type: DataType.INTEGER,
+  //   allowNull: false,
+  // })
+  // userId: number;
 
-//   @ApiProperty({
-//     example: "Russia, Moscow, Baker St., 4",
-//     description: "Address",
-//   })
-//   @Column({
-//     type: DataType.STRING,
-//     allowNull: false,
-//   })
-//   address: string;
+  @ApiProperty({
+    example: "Russia, Moscow, Baker St., 4",
+    description: "Address",
+  })
+  @Column({
+    type: "varchar",
+    length: 50,
+    nullable: false,
+  })
+  address: string;
 
-//   @ApiProperty({ example: "110032", description: "Index" })
-//   @Column({
-//     type: DataType.INTEGER,
-//     allowNull: false,
-//   })
-//   shipIndex: number;
+  @ApiProperty({ example: "110032", description: "Index" })
+  @Column({
+    type: "int",
+    nullable: false,
+  })
+  shipIndex: number;
 
-//   @ApiProperty({ example: "Vladimir", description: "Name" })
-//   @Column({
-//     type: DataType.STRING,
-//     allowNull: false,
-//   })
-//   name: string;
+  @ApiProperty({ example: "Vladimir", description: "Name" })
+  @Column({
+    type: "int",
+    nullable: false,
+  })
+  name: string;
 
-//   @ApiProperty({ example: "Putin", description: "Surname" })
-//   @Column({
-//     type: DataType.STRING,
-//     allowNull: false,
-//   })
-//   surname: string;
+  @ApiProperty({ example: "Putin", description: "Surname" })
+  @Column({
+    type: "varchar",
+    length: 50,
+    nullable: false,
+  })
+  surname: string;
 
-//   @ApiProperty({ example: "Thebest", description: "Patronymic" })
-//   @Column({
-//     type: DataType.STRING,
-//     allowNull: false,
-//   })
-//   patronymic: string;
+  @ApiProperty({ example: "Thebest", description: "Patronymic" })
+  @Column({
+    type: "varchar",
+    length: 50,
+    nullable: false,
+  })
+  patronymic: string;
 
-//   @ApiProperty({ example: "88005553535", description: "Phone number" })
-//   @Column({
-//     type: DataType.STRING,
-//     allowNull: false,
-//   })
-//   phone: string;
+  @ApiProperty({ example: "88005553535", description: "Phone number" })
+  @Column({
+    type: "varchar",
+    length: 50,
+    nullable: false,
+  })
+  phone: string;
 
-//   @IsEmail
-//   @ApiProperty({ example: "user@mail.com", description: "Email" })
-//   @Column({
-//     type: DataType.STRING,
-//     allowNull: false,
-//   })
-//   email: string;
+  @ApiProperty({ example: "user@mail.com", description: "Email" })
+  @Column({
+    type: "varchar",
+    length: 50,
+    nullable: false,
+  })
+  email: string;
 
-//   @ApiProperty({ example: "9.99", description: "Total cost" })
-//   @Column({
-//     type: DataType.DOUBLE,
-//     defaultValue: 0.0,
-//   })
-//   total: number;
+  @ApiProperty({ example: "9.99", description: "Total cost" })
+  @Column({
+    type: "double",
+    default: 0.0,
+  })
+  total: number;
 
-//   @ApiProperty({ example: "0.99", description: "Shipping cost" })
-//   @Column({
-//     type: DataType.DOUBLE,
-//     defaultValue: 0.0,
-//   })
-//   shipping: number;
-// }
+  @ApiProperty({ example: "0.99", description: "Shipping cost" })
+  @Column({
+    type: "double",
+    default: 0.0,
+  })
+  shipping: number;
+
+  @ManyToOne(() => User, (user) => user.orders)
+  @JoinColumn({ name: "user_id" })
+  user: User;
+}

@@ -7,6 +7,10 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRole } from "src/enums";
+import { OneToOne } from "typeorm";
+import { Cart } from "src/carts/carts.model";
+import { OneToMany } from "typeorm";
+import { Order } from "src/orders/orders.model";
 
 // interface UserCreationAttrs {
 //   id: number;
@@ -26,10 +30,6 @@ export class User {
   @ApiProperty({ example: "user@mail.ru", description: "Email" })
   @Column({ type: "varchar", unique: true })
   email: string;
-
-  // @ApiProperty({ example: "MegaKiller777", description: "User Name" })
-  // @Column({ type: DataType.STRING, unique: true, allowNull: false })
-  // name: string;
 
   @ApiProperty({ example: "12345678", description: "Password" })
   @Column({ type: "varchar", nullable: true })
@@ -51,4 +51,10 @@ export class User {
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
+
+  @OneToOne(() => Cart)
+  cart: Cart;
+
+  @OneToMany(() => Order, (orders) => orders.user)
+  orders: Order[];
 }
