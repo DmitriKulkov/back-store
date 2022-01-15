@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stocks/stock.entity";
+import { Media } from "../media/media.entity";
 
 @Entity({ name: "products" })
 export class Product {
@@ -63,4 +64,7 @@ export class Product {
 
   @OneToMany(() => Stock, (stock) => stock.productId)
   stocks: Stock[];
+
+  @OneToMany(() => Media, (media) => media.productId)
+  media: Media[];
 }

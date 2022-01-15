@@ -8,8 +8,9 @@ import {
   JoinColumn,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Color, Size } from "src/enums";
+import { Size } from "src/enums";
 import { Product } from "src/products/product.entity";
+import { Color } from "src/color/color.entity";
 
 @Entity({ name: "stocks" })
 export class Stock {
@@ -24,9 +25,13 @@ export class Stock {
   @JoinColumn({ name: "product_id" })
   productId: Product;
 
-  @ApiProperty({ example: "BLACK", description: "product color" })
-  @Column({ type: "enum", enum: Color, enumName: "colors" })
-  color: string;
+  @ApiProperty({ example: "BLACK", description: "product color id" })
+  @ManyToOne(() => Color, (color) => color.stocks, {
+    primary: true,
+    onDelete: "CASCADE",
+  })
+  @JoinColumn({ name: "color_id" })
+  colorId: number;
 
   @ApiProperty({ example: "XS", description: "product size" })
   @Column({ type: "enum", enum: Size, enumName: "sizes", nullable: true })
