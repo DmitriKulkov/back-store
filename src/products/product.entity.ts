@@ -20,11 +20,11 @@ export class Product {
   collectionId: number;
 
   @ApiProperty({ example: "From da hood T-shirt", description: "product name" })
-  @Column({ type: "varchar", length: 50 })
+  @Column({ type: "varchar", length: 30 })
   name: string;
 
   @ApiProperty({ example: "neznayou", description: "unique link" })
-  @Column({ type: "varchar", length: 50, unique: true })
+  @Column({ type: "varchar", length: 30, unique: true })
   slug: string;
 
   @ApiProperty({ example: 3000, description: "price" })
@@ -54,10 +54,6 @@ export class Product {
   @ApiProperty({ example: "4/1/22", description: "discount end date" })
   @Column({ type: "timestamp", nullable: true, name: "ends_at" })
   endsAt: Date;
-
-  @ApiProperty({ example: "img", description: "title image" })
-  @Column({ type: "varchar", nullable: true, name: "title_img" })
-  titleImg: string;
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;

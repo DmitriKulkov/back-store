@@ -1,3 +1,4 @@
+import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 // import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -26,7 +27,7 @@ async function bootstrap() {
     credentials: true,
   });
   // app.use(cookieParser());
-
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(PORT, () => console.log(`Server started on port = ${PORT}`));
 }
 bootstrap();
