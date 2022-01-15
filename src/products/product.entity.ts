@@ -8,16 +8,15 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stocks/stock.entity";
+import { Collection } from "typeorm";
+import { ManyToOne } from "typeorm";
+import { JoinColumn } from "typeorm";
 
 @Entity({ name: "products" })
 export class Product {
   @ApiProperty({ example: "1", description: "unique id" })
   @PrimaryGeneratedColumn()
   id: number;
-
-  @ApiProperty({ example: "1", description: "unique collection id" })
-  @Column({ type: "int", nullable: true, name: "colection_id" })
-  collectionId: number;
 
   @ApiProperty({ example: "From da hood T-shirt", description: "product name" })
   @Column({ type: "varchar", length: 30 })
@@ -63,4 +62,8 @@ export class Product {
 
   @OneToMany(() => Stock, (stock) => stock.productId)
   stocks: Stock[];
+
+  @ManyToOne(() => Collection, (collection) => collection.products)
+  @JoinColumn({ name: "collection_id" })
+  collection: Collection;
 }
