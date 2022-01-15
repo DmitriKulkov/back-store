@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stocks/stock.entity";
 import { Collection } from "typeorm";
@@ -53,12 +46,6 @@ export class Product {
   @ApiProperty({ example: "4/1/22", description: "discount end date" })
   @Column({ type: "timestamp", nullable: true, name: "ends_at" })
   endsAt: Date;
-
-  @CreateDateColumn({ name: "created_at" })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: "updated_at" })
-  updatedAt: Date;
 
   @OneToMany(() => Stock, (stock) => stock.productId)
   stocks: Stock[];

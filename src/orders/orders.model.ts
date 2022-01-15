@@ -10,6 +10,7 @@
 // import { User } from "src/users/users.model";
 
 import { ApiProperty } from "@nestjs/swagger";
+import { OrderItems } from "src/order-items/order-items.entity";
 import { User } from "src/users/user.entity";
 import {
   Column,
@@ -122,4 +123,8 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: "user_id" })
   user: User;
+
+  @OneToMany(() => OrderItems, (order_items) => order_items.order)
+  @JoinColumn({ name: "order_items_id" })
+  order_items: OrderItems[];
 }

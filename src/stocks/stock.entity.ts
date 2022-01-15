@@ -2,14 +2,14 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Color, Size } from "src/enums";
 import { Product } from "src/products/product.entity";
+import { OneToMany } from "typeorm";
+import { OrderItems } from "src/order-items/order-items.entity";
 
 @Entity({ name: "stocks" })
 export class Stock {
@@ -36,9 +36,6 @@ export class Stock {
   @Column({ type: "int" })
   quantity: number;
 
-  @CreateDateColumn({ name: "created_at" })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: "updated_at" })
-  updatedAt: Date;
+  @OneToMany(() => OrderItems, (order_items) => order_items.stock)
+  order_items: OrderItems[];
 }
