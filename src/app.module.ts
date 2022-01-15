@@ -6,7 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { StocksModule } from "./stocks/stocks.module";
 import { Stock } from "./stocks/stock.entity";
 import { MediaModule } from "./media/media.module";
-import { ColorModule } from "./color/color.module";
+import { ColorsModule } from "./color/colors.module";
 import { Color } from "./color/color.entity";
 import { Media } from "./media/media.entity";
 
@@ -30,7 +30,7 @@ import { Media } from "./media/media.entity";
     ProductsModule,
     StocksModule,
     MediaModule,
-    ColorModule,
+    ColorsModule,
     // UsersModule,
   ],
   controllers: [],

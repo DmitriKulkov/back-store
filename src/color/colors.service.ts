@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { Color } from "./color.entity";
 
 @Injectable()
-export class ColorService {
+export class ColorsService {
   constructor(@InjectRepository(Color) private colorsRepo: Repository<Color>) {}
 
   async getAll(): Promise<Color[]> {

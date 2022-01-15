@@ -7,11 +7,11 @@ import {
   Post,
   Put,
 } from "@nestjs/common";
-import { ColorService } from "./color.service";
+import { ColorsService } from "./colors.service";
 
 @Controller("color")
-export class ColorController {
-  constructor(private colorService: ColorService) {}
+export class ColorsController {
+  constructor(private colorService: ColorsService) {}
 
   @Get("/")
   getAll() {
