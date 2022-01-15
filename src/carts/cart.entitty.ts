@@ -1,11 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-// interface CartsCreationAttrs {
-//   id: number;
-//   userId: number;
-// }
-
 @Entity({ name: "carts" })
 export class Cart {
   @ApiProperty({ example: "1", description: "Unique Id" })
