@@ -2,10 +2,9 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  Unique,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Size } from "src/enums";
@@ -13,6 +12,7 @@ import { Product } from "src/products/product.entity";
 import { Color } from "src/color/color.entity";
 
 @Entity({ name: "stocks" })
+@Unique("stocks_product_id_size_color_id_key", ["colorId", "size", "productId"])
 export class Stock {
   @ApiProperty({ example: "1", description: "unique id" })
   @PrimaryGeneratedColumn()
@@ -34,16 +34,15 @@ export class Stock {
   colorId: number;
 
   @ApiProperty({ example: "XS", description: "product size" })
-  @Column({ type: "enum", enum: Size, enumName: "sizes", nullable: true })
+  @Column({
+    type: "enum",
+    enum: Size,
+    enumName: "sizes",
+    primary: true,
+  })
   size: string;
 
   @ApiProperty({ example: 10, description: "product quantity" })
   @Column({ type: "int" })
   quantity: number;
-
-  @CreateDateColumn({ name: "created_at" })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: "updated_at" })
-  updatedAt: Date;
 }
