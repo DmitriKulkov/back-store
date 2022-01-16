@@ -32,23 +32,13 @@ export class StocksService {
   // probably should create folder with same name or slug
   // in order to organize media files in directories
   async create(dto) {
-    const product = await this.productsRepo.findOne(dto.productId);
-    if (!product) {
-      throw new HttpException(
-        "product with such id doesn't exists",
-        HttpStatus.BAD_REQUEST,
-      );
+    try {
+      const stock = this.stocksRepo.create(dto);
+      await this.stocksRepo.save(stock);
+      return stock;
+    } catch (error) {
+      throw new HttpException(error.detail, HttpStatus.BAD_REQUEST);
     }
-
-    const s = await this.stocksRepo.findOne({
-      where: { productId: dto.productId, size: dto.size, color: dto.color },
-    });
-    if (s) {
-      throw new HttpException("stock already exists", HttpStatus.BAD_REQUEST);
-    }
-    const stock = this.stocksRepo.create(dto);
-    await this.stocksRepo.save(stock);
-    return stock;
   }
 
   async update(dto) {
