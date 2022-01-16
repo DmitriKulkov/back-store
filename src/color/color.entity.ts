@@ -10,7 +10,7 @@ export class Color {
   id: number;
 
   @ApiProperty({ example: "YELLOW", description: "color name" })
-  @Column({ type: "varchar", length: 30 })
+  @Column({ type: "varchar", length: 30, unique: true })
   name: string;
 
   @OneToMany(() => Media, (media) => media.colorId)

@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { ColorsService } from "./colors.service";
 
-@Controller("color")
+@Controller("colors")
 export class ColorsController {
   constructor(private colorService: ColorsService) {}
 
