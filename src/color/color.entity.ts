@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Media } from "src/media/media.entity";
-import { Stock } from "src/stocks/stock.entity";
+import { Stock } from "src/stock/stock.entity";
 
 @Entity({ name: "colors" })
 @Check("check_hex", "hex ~ '^#[a-f0-9]{2}[a-f0-9]{2}[a-f0-9]{2}$'")

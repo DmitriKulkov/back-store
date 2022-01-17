@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRole } from "src/enums";
-import { Order } from "../orders/orders.entity";
+import { Order } from "../order/order.entity";
 
 @Entity({ name: "users" })
 export class User {

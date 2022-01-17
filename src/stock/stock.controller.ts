@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from "@nestjs/common";
-import { StocksService } from "./stocks.service";
+import { StocksService } from "./stock.service";
 
 @Controller("stocks")
 export class StocksController {

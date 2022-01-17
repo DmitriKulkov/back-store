@@ -41,7 +41,7 @@ export class UsersService {
       );
     }
 
-    const s1 = await this.usersRepo.update(dto, { id: dto.id });
+    this.usersRepo.update(dto, { id: dto.id });
     return dto;
   }
 
