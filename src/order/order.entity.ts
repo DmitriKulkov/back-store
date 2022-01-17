@@ -1,8 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { User } from "../user/user.entity";
-
-// need to add email constraints
+import { OrderItem } from "../order-item/order-item.entity";
 
 @Entity({ name: "orders" })
 export class Order {
@@ -11,10 +17,9 @@ export class Order {
   id: number;
 
   @ApiProperty({ example: "1", description: "User Id" })
-  @ManyToOne(() => User, (user) => user, {
-    primary: true,
-  })
-  userId: number;
+  @ManyToOne(() => User, (user) => user)
+  @JoinColumn({ name: "user_id" })
+  user: number;
 
   @ApiProperty({
     example: "Russia, Moscow, Baker St., 4",
@@ -28,6 +33,7 @@ export class Order {
   @ApiProperty({ example: "110032", description: "Index" })
   @Column({
     type: "int",
+    name: "ship_index",
   })
   shipIndex: number;
 
@@ -79,4 +85,7 @@ export class Order {
     default: 0.0,
   })
   shipping: number;
+
+  @OneToMany(() => OrderItem, (item) => item.order)
+  items: OrderItem;
 }

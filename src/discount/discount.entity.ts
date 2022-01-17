@@ -15,7 +15,7 @@ export class Discount {
 
   @OneToOne(() => Product)
   @JoinColumn({ name: "product_id" })
-  productId: Product;
+  product: Product;
 
   @ApiProperty({ example: 1000, description: "discount" })
   @Column({ type: "double precision", nullable: true })

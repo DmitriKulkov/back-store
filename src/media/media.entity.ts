@@ -21,10 +21,9 @@ export class Media {
 
   @ManyToOne(() => Product, (product) => product, {
     primary: true,
-    onDelete: "CASCADE",
   })
   @JoinColumn({ name: "product_id" })
-  productId: Product;
+  product: Product;
 
   @ManyToOne(() => Color, (color) => color.media, {
     primary: true,

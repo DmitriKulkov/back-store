@@ -19,7 +19,7 @@ export class ProductService {
 
   async getAllSellable() {
     const products = await this.productsRepo.find({
-      select: ["id", "collectionId", "name", "price", "description"],
+      select: ["id", "collection", "name", "price", "description"],
       where: {
         released: true,
       },

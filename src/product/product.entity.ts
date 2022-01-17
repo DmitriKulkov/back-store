@@ -9,10 +9,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stock/stock.entity";
 import { ManyToOne } from "typeorm";
 import { JoinColumn } from "typeorm";
-import { ProductCategories } from "src/product-categories/product-categories.entity";
+import { Category } from "src/category/category.entity";
 import { Media } from "../media/media.entity";
 import { Discount } from "../discount/discount.entity";
-import { Collection } from "src/collections/collection.entity";
+import { Collection } from "src/collection/collection.entity";
 
 @Entity({ name: "products" })
 export class Product {
@@ -44,22 +44,20 @@ export class Product {
   @Column({ type: "bool", default: false, name: "published_at" })
   released: boolean;
 
-  @OneToMany(() => Stock, (stock) => stock.productId)
+  @OneToMany(() => Stock, (stock) => stock.product)
   stocks: Stock[];
 
   @ManyToOne(() => Collection, (collection) => collection.products)
   @JoinColumn({ name: "collection_id" })
   collection: Collection;
 
-  @ManyToOne(
-    () => ProductCategories,
-    (product_category) => product_category.products,
-  )
+  @ManyToOne(() => Category, (category) => category.products)
   @JoinColumn({ name: "category_id" })
-  product_category: ProductCategories;
-  @OneToMany(() => Media, (media) => media.productId)
+  category: Category;
+
+  @OneToMany(() => Media, (media) => media.product)
   media: Media[];
 
-  @OneToOne(() => Discount, (discount) => discount.productId)
+  @OneToOne(() => Discount, (discount) => discount.product)
   discount: Discount;
 }

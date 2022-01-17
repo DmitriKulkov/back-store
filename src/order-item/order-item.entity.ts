@@ -6,11 +6,11 @@ import {
   Column,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Order } from "src/orders/order.model";
+import { Order } from "src/order/order.entity";
 import { Stock } from "src/stock/stock.entity";
 
-@Entity({ name: "order-items" })
-export class OrderItems {
+@Entity({ name: "order_items" })
+export class OrderItem {
   @ApiProperty({ example: "1", description: "unique id" })
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,11 +23,11 @@ export class OrderItems {
   @Column({ type: "int", nullable: false })
   discount: number;
 
-  @ManyToOne(() => Stock, (stock) => stock.order_items)
+  @ManyToOne(() => Stock, (stock) => stock.orderItems)
   @JoinColumn({ name: "stock_id" })
   stock: Stock;
 
-  @ManyToOne(() => Order, (order) => order.order_items)
+  @ManyToOne(() => Order, (order) => order.items)
   @JoinColumn({ name: "order_id" })
   order: Order;
 }

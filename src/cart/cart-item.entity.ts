@@ -10,8 +10,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-@Entity({ name: "cart-items" })
-export class CartItems {
+@Entity({ name: "cart_items" })
+export class CartItem {
   @ApiProperty({ example: "1", description: "Unique Id" })
   @PrimaryGeneratedColumn()
   id: number;
@@ -20,11 +20,11 @@ export class CartItems {
   @Column({ type: "int", nullable: false })
   quantity: number;
 
-  @ManyToOne(() => Stock, (stock) => stock.cart_items)
+  @ManyToOne(() => Stock, (stock) => stock.cartItems)
   @JoinColumn({ name: "stock_id" })
   stock: Stock;
 
-  @ManyToOne(() => Cart, (cart) => cart.cart_items)
+  @ManyToOne(() => Cart, (cart) => cart.items)
   @JoinColumn({ name: "cart_id" })
   cart: Cart;
 }

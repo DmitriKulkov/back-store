@@ -9,39 +9,36 @@ import {
 import { ApiProperty } from "@nestjs/swagger";
 import { Size } from "src/enums";
 import { OneToMany } from "typeorm";
-import { OrderItems } from "src/order-items/order-items.entity";
-import { CartItems } from "src/cart-items/cart-items.entity";
+import { CartItem } from "src/cart/cart-item.entity";
 import { Color } from "src/color/color.entity";
 import { Product } from "src/product/product.entity";
+import { OrderItem } from "src/order-item/order-item.entity";
 
 @Entity({ name: "stocks" })
-@Unique("stocks_product_id_size_color_id_key", ["colorId", "size", "productId"])
+@Unique("stocks_product_id_size_color_id_key", ["color", "size", "product"])
 export class Stock {
   @ApiProperty({ example: "1", description: "unique id" })
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => Product, (product) => product.stocks, {
-    primary: true,
     onDelete: "CASCADE",
   })
   @JoinColumn({ name: "product_id" })
-  productId: Product;
+  product: Product;
 
   @ApiProperty({ example: "BLACK", description: "product color id" })
   @ManyToOne(() => Color, (color) => color.stocks, {
-    primary: true,
     onDelete: "CASCADE",
   })
   @JoinColumn({ name: "color_id" })
-  colorId: number;
+  color: number;
 
   @ApiProperty({ example: "XS", description: "product size" })
   @Column({
     type: "enum",
     enum: Size,
     enumName: "sizes",
-    primary: true,
   })
   size: string;
 
@@ -49,9 +46,9 @@ export class Stock {
   @Column({ type: "int" })
   quantity: number;
 
-  @OneToMany(() => OrderItems, (order_items) => order_items.stock)
-  order_items: OrderItems[];
+  @OneToMany(() => OrderItem, (orderItems) => orderItems)
+  orderItems: OrderItem[];
 
-  @OneToMany(() => CartItems, (cart_items) => cart_items.stock)
-  cart_items: CartItems[];
+  @OneToMany(() => CartItem, (cartItems) => cartItems.stock)
+  cartItems: CartItem[];
 }

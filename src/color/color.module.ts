@@ -9,4 +9,4 @@ import { ColorService } from "./color.service";
   providers: [ColorService],
   imports: [TypeOrmModule.forFeature([Color])],
 })
-export class ColorsModule {}
+export class ColorModule {}

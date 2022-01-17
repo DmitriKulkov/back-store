@@ -9,7 +9,7 @@ import {
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRole } from "src/enums";
 import { OneToOne } from "typeorm";
-import { Order } from "src/orders/order.model";
+import { Order } from "src/order/order.entity";
 import { Cart } from "src/cart/cart.entity";
 
 @Entity({ name: "users" })
@@ -26,16 +26,21 @@ export class User {
   @Column({ type: "varchar", nullable: true })
   password: string;
 
+  @ApiProperty({ example: "user", description: "User role" })
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    enumName: "roles",
+    default: UserRole.USER,
+  })
+  role: string;
+
   @ApiProperty({
     example: "01.01.2022",
     description: "Last session date",
   })
   @Column({ type: "timestamp", nullable: true, name: "last_login" })
   lastLogin: Date;
-
-  @ApiProperty({ example: "user", description: "User role" })
-  @Column({ type: "enum", default: UserRole.USER })
-  role: string;
 
   @OneToMany(() => Order, (order) => order.user)
   orders: Order[];

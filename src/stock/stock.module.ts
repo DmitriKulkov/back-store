@@ -10,4 +10,4 @@ import { StockService } from "./stock.service";
   providers: [StockService],
   imports: [TypeOrmModule.forFeature([Stock, Product])],
 })
-export class StocksModule {}
+export class StockModule {}

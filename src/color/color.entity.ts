@@ -33,6 +33,6 @@ export class Color {
   @OneToMany(() => Media, (media) => media.colorId)
   media: Media[];
 
-  @OneToMany(() => Stock, (stock) => stock.colorId)
+  @OneToMany(() => Stock, (stock) => stock.color)
   stocks: Stock[];
 }
