@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRole } from "src/enums";
+import { Order } from "../orders/orders.entity";
 
 @Entity({ name: "users" })
 export class User {
@@ -32,6 +34,9 @@ export class User {
   @ApiProperty({ example: "user", description: "User role" })
   @Column({ type: "enum", default: UserRole.USER })
   role: string;
+
+  @OneToMany(() => Order, (order) => order.userId)
+  orders: Order[];
 
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
