@@ -7,11 +7,11 @@ import {
   Post,
   Put,
 } from "@nestjs/common";
-import { StocksService } from "./stock.service";
+import { StockService } from "./stock.service";
 
 @Controller("stocks")
-export class StocksController {
-  constructor(private stockService: StocksService) {}
+export class StockController {
+  constructor(private stockService: StockService) {}
 
   @Get("/")
   getAll() {

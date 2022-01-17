@@ -1,18 +1,18 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { ProductsModule } from "./products/products.module";
-import { Product } from "./products/product.entity";
+import { ProductsModule } from "./product/product.module";
+import { Product } from "./product/product.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { StocksModule } from "./stock/stock.module";
 import { Stock } from "./stock/stock.entity";
 import { MediaModule } from "./media/media.module";
-import { ColorsModule } from "./color/colors.module";
+import { ColorsModule } from "./color/color.module";
 import { Color } from "./color/color.entity";
 import { Media } from "./media/media.entity";
 import { Discount } from "./discount/discount.entity";
 import { CartModule } from "./cart/cart.module";
 import { DiscountModule } from "./discount/discount.module";
-import { OrdersService } from "./order/order.service";
+import { OrderService } from "./order/order.service";
 
 @Module({
   imports: [
@@ -40,6 +40,6 @@ import { OrdersService } from "./order/order.service";
     // UsersModule,
   ],
   controllers: [],
-  providers: [OrdersService],
+  providers: [OrderService],
 })
 export class AppModule {}

@@ -8,9 +8,9 @@ import {
   OneToOne,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Stock } from "src/stocks/stock.entity";
+import { Stock } from "src/stock/stock.entity";
 import { Media } from "../media/media.entity";
-import { Discount } from "../discounts/discount.entity";
+import { Discount } from "../discount/discount.entity";
 
 @Entity({ name: "products" })
 export class Product {

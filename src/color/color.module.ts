@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ColorsController } from "./colors.controller";
+import { ColorController } from "./color.controller";
 import { Color } from "./color.entity";
-import { ColorsService } from "./colors.service";
+import { ColorService } from "./color.service";
 
 @Module({
-  controllers: [ColorsController],
-  providers: [ColorsService],
+  controllers: [ColorController],
+  providers: [ColorService],
   imports: [TypeOrmModule.forFeature([Color])],
 })
 export class ColorsModule {}

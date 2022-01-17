@@ -7,10 +7,10 @@ import {
   Param,
   Post,
 } from "@nestjs/common";
-import { ProductService } from "./products.service";
+import { ProductService } from "./product.service";
 
 @Controller("products")
-export class ProductsController {
+export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get("/")

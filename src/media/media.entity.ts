@@ -6,7 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Product } from "src/products/product.entity";
+import { Product } from "src/product/product.entity";
 import { Color } from "src/color/color.entity";
 
 @Entity({ name: "media" })

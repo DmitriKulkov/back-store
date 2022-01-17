@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Product } from "src/products/product.entity";
+import { Product } from "src/product/product.entity";
 import { Not, Repository } from "typeorm";
 import { Stock } from "./stock.entity";
 
 @Injectable()
-export class StocksService {
+export class StockService {
   constructor(
     @InjectRepository(Stock) private stocksRepo: Repository<Stock>,
     @InjectRepository(Product) private productsRepo: Repository<Product>,
