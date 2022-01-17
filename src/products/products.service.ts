@@ -12,7 +12,7 @@ export class ProductService {
 
   async getAll() {
     const products = await this.productsRepo.find({
-      // relations: ["stocks"],
+      relations: ["discount"],
     });
     return products;
   }

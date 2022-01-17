@@ -5,10 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stocks/stock.entity";
 import { Media } from "../media/media.entity";
+import { Discount } from "../discounts/discount.entity";
 
 @Entity({ name: "products" })
 export class Product {
@@ -44,18 +46,6 @@ export class Product {
   @Column({ type: "bool", default: false, name: "published_at" })
   released: boolean;
 
-  @ApiProperty({ example: 1000, description: "discount" })
-  @Column({ type: "double precision", nullable: true })
-  discount: number;
-
-  @ApiProperty({ example: "21/22", description: "discount start date" })
-  @Column({ type: "timestamp", nullable: true, name: "starts_at" })
-  startsAt: Date;
-
-  @ApiProperty({ example: "4/1/22", description: "discount end date" })
-  @Column({ type: "timestamp", nullable: true, name: "ends_at" })
-  endsAt: Date;
-
   @CreateDateColumn({ name: "created_at" })
   createdAt: Date;
 
@@ -67,4 +57,7 @@ export class Product {
 
   @OneToMany(() => Media, (media) => media.productId)
   media: Media[];
+
+  @OneToOne(() => Discount, (discount) => discount.productId)
+  discount: Discount;
 }

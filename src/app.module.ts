@@ -9,6 +9,7 @@ import { MediaModule } from "./media/media.module";
 import { ColorsModule } from "./color/colors.module";
 import { Color } from "./color/color.entity";
 import { Media } from "./media/media.entity";
+import { Discount } from "./discounts/discount.entity";
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { Media } from "./media/media.entity";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Product, Stock, Color, Media],
+      entities: [Product, Stock, Color, Media, Discount],
       synchronize: true,
       autoLoadEntities: true,
       logging: true,
