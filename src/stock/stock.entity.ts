@@ -8,8 +8,11 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Size } from "src/enums";
-import { Product } from "src/product/product.entity";
+import { OneToMany } from "typeorm";
+import { OrderItems } from "src/order-items/order-items.entity";
+import { CartItems } from "src/cart-items/cart-items.entity";
 import { Color } from "src/color/color.entity";
+import { Product } from "src/product/product.entity";
 
 @Entity({ name: "stocks" })
 @Unique("stocks_product_id_size_color_id_key", ["colorId", "size", "productId"])
@@ -45,4 +48,10 @@ export class Stock {
   @ApiProperty({ example: 10, description: "product quantity" })
   @Column({ type: "int" })
   quantity: number;
+
+  @OneToMany(() => OrderItems, (order_items) => order_items.stock)
+  order_items: OrderItems[];
+
+  @OneToMany(() => CartItems, (cart_items) => cart_items.stock)
+  cart_items: CartItems[];
 }

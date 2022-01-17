@@ -8,7 +8,9 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRole } from "src/enums";
-import { Order } from "../order/order.entity";
+import { OneToOne } from "typeorm";
+import { Order } from "src/orders/order.model";
+import { Cart } from "src/cart/cart.entity";
 
 @Entity({ name: "users" })
 export class User {
@@ -35,7 +37,7 @@ export class User {
   @Column({ type: "enum", default: UserRole.USER })
   role: string;
 
-  @OneToMany(() => Order, (order) => order.userId)
+  @OneToMany(() => Order, (order) => order.user)
   orders: Order[];
 
   @CreateDateColumn({ name: "created_at" })
@@ -43,4 +45,7 @@ export class User {
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
+
+  @OneToOne(() => Cart)
+  cart: Cart;
 }
