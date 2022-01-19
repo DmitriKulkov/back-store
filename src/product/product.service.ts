@@ -17,17 +17,17 @@ export class ProductService {
     return products;
   }
 
-  async getAllSellable() {
-    const products = await this.productsRepo.find({
-      select: ["id", "collection", "name", "price", "description"],
-      where: {
-        released: true,
-      },
-    });
-    // и надо как-то возвращать скидку равную нулю если даты не наступили...
-    //
-    return products;
-  }
+  // async getAllSellable() {
+  //   const products = await this.productsRepo.find({
+  //     select: ["id", "collection", "name", "price", "description"],
+  //     where: {
+  //       released: true,
+  //     },
+  //   });
+  //   // и надо как-то возвращать скидку равную нулю если даты не наступили...
+  //   //
+  //   return products;
+  //}
 
   async getOne(id: number) {
     const product = await this.productsRepo.findOne(id);

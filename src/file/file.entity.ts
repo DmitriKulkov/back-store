@@ -6,12 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-<<<<<<< HEAD:src/media/media.entity.ts
 import { Product } from "src/product/product.entity";
-import { Color } from "src/color/color.entity";
-=======
-import { Product } from "src/products/product.entity";
->>>>>>> Dmitri:src/file/file.entity.ts
 
 @Entity({ name: "file" })
 export class File {
@@ -28,14 +23,4 @@ export class File {
   })
   @JoinColumn({ name: "product_id" })
   product: Product;
-<<<<<<< HEAD:src/media/media.entity.ts
-
-  @ManyToOne(() => Color, (color) => color.media, {
-    primary: true,
-    onDelete: "CASCADE",
-  })
-  @JoinColumn({ name: "color_id" })
-  colorId: Color;
-=======
->>>>>>> Dmitri:src/file/file.entity.ts
 }
