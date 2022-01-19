@@ -7,8 +7,7 @@ import {
   Check,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Media } from "src/media/media.entity";
-import { Stock } from "src/stock/stock.entity";
+import { Product } from "src/product/product.entity";
 
 @Entity({ name: "colors" })
 @Check("check_hex", "hex ~ '^#[a-f0-9]{2}[a-f0-9]{2}[a-f0-9]{2}$'")
@@ -30,9 +29,6 @@ export class Color {
   @Column({ type: "varchar", length: 7, unique: true })
   hex: string;
 
-  @OneToMany(() => Media, (media) => media.colorId)
-  media: Media[];
-
-  @OneToMany(() => Stock, (stock) => stock.color)
-  stocks: Stock[];
+  @OneToMany(() => Product, (products) => products.color)
+  products: Product[];
 }

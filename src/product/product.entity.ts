@@ -9,10 +9,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stock/stock.entity";
 import { ManyToOne } from "typeorm";
 import { JoinColumn } from "typeorm";
-import { Category } from "src/category/category.entity";
-import { Media } from "../media/media.entity";
-import { Discount } from "../discount/discount.entity";
-import { Collection } from "src/collection/collection.entity";
+
+import { Model } from "src/model/model.entity";
+import { Color } from "src/color/color.entity";
+import { File } from "../file/file.entity";
+import { Discount } from "src/discount/discount.entity";
 
 @Entity({ name: "products" })
 export class Product {
@@ -20,44 +21,32 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: "From da hood T-shirt", description: "product name" })
-  @Column({ type: "varchar", length: 30 })
-  name: string;
-
-  @ApiProperty({ example: "neznayou", description: "unique link" })
-  @Column({ type: "varchar", length: 30, unique: true })
-  slug: string;
-
-  @ApiProperty({ example: 3000, description: "price" })
-  @Column({ type: "double precision" })
+  @ApiProperty({ example: "9.99", description: "Product Price" })
+  @Column({ type: "money", nullable: false })
   price: number;
 
-  @ApiProperty({
-    example:
-      "This t-shirt started from da bottom. only ... wear these rare items",
-    description: "description",
-  })
-  @Column({ type: "text", nullable: true })
-  description: string;
+  @ManyToOne(() => Model, (model) => model.products)
+  @JoinColumn({ name: "model_id" })
+  model: Model;
 
-  @ApiProperty({ example: "xzxzxzzzz", description: "sale start date" })
-  @Column({ type: "bool", default: false, name: "published_at" })
-  released: boolean;
+  @ApiProperty({ example: "21/22", description: "discount start date" })
+  @Column({ type: "timestamp", nullable: true, name: "starts_at" })
+  startsAt: Date;
+
+  @ApiProperty({ example: "4/1/22", description: "discount end date" })
+  @Column({ type: "timestamp", nullable: true, name: "ends_at" })
+  endsAt: Date;
 
   @OneToMany(() => Stock, (stock) => stock.product)
   stocks: Stock[];
 
-  @ManyToOne(() => Collection, (collection) => collection.products)
-  @JoinColumn({ name: "collection_id" })
-  collection: Collection;
-
-  @ManyToOne(() => Category, (category) => category.products)
-  @JoinColumn({ name: "category_id" })
-  category: Category;
-
-  @OneToMany(() => Media, (media) => media.product)
-  media: Media[];
+  @OneToMany(() => File, (files) => files.product)
+  files: File[];
 
   @OneToOne(() => Discount, (discount) => discount.product)
   discount: Discount;
+
+  @ManyToOne(() => Color, (color) => color.products)
+  @JoinColumn({ name: "color_id" })
+  color: Color;
 }

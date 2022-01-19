@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Cart } from "src/cart/cart.entity";
 import { Stock } from "src/stock/stock.entity";
+import { User } from "src/user/user.entity";
 
 import {
   Column,
@@ -24,7 +24,7 @@ export class CartItem {
   @JoinColumn({ name: "stock_id" })
   stock: Stock;
 
-  @ManyToOne(() => Cart, (cart) => cart.items)
-  @JoinColumn({ name: "cart_id" })
-  cart: Cart;
+  @ManyToOne(() => User, (user) => user.cartItems)
+  @JoinColumn({ name: "user_id" })
+  user: User;
 }

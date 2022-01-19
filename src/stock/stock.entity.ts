@@ -9,10 +9,9 @@ import {
 import { ApiProperty } from "@nestjs/swagger";
 import { Size } from "src/enums";
 import { OneToMany } from "typeorm";
-import { CartItem } from "src/cart/cart-item.entity";
-import { Color } from "src/color/color.entity";
 import { Product } from "src/product/product.entity";
 import { OrderItem } from "src/order-item/order-item.entity";
+import { CartItem } from "src/cart-items/cart-item.entity";
 
 @Entity({ name: "stocks" })
 @Unique("stocks_product_id_size_color_id_key", ["color", "size", "product"])
@@ -26,13 +25,6 @@ export class Stock {
   })
   @JoinColumn({ name: "product_id" })
   product: Product;
-
-  @ApiProperty({ example: "BLACK", description: "product color id" })
-  @ManyToOne(() => Color, (color) => color.stocks, {
-    onDelete: "CASCADE",
-  })
-  @JoinColumn({ name: "color_id" })
-  color: number;
 
   @ApiProperty({ example: "XS", description: "product size" })
   @Column({

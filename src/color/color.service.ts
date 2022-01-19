@@ -41,7 +41,7 @@ export class ColorService {
       );
     }
 
-    const s1 = await this.colorsRepo.update(dto, { id: dto.id });
+    this.colorsRepo.update(dto, { id: dto.id });
     return dto;
   }
 

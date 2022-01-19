@@ -3,23 +3,26 @@ import { ConfigModule } from "@nestjs/config";
 import { ProductModule } from "./product/product.module";
 import { Product } from "./product/product.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Stock } from "./stock/stock.entity";
-import { MediaModule } from "./media/media.module";
-import { ColorModule } from "./color/color.module";
+import { MediaModule } from "./file/file.module";
 import { Color } from "./color/color.entity";
-import { Media } from "./media/media.entity";
+import { File } from "./file/file.entity";
+import { CartItemsModule } from "./cart-items/cart-items.module";
+import { CategoryModule } from "./category/category.module";
+import { CollectionModule } from "./collection/collection.module";
+import { ModelModule } from "./model/model.module";
+import { Stock } from "./stock/stock.entity";
 import { Discount } from "./discount/discount.entity";
-import { CartModule } from "./cart/cart.module";
-import { DiscountModule } from "./discount/discount.module";
 import { Order } from "./order/order.entity";
 import { OrderItem } from "./order-item/order-item.entity";
-import { Cart } from "./cart/cart.entity";
-import { CartItem } from "src/cart/cart-item.entity";
+import { CartItem } from "./cart-items/cart-item.entity";
 import { User } from "./user/user.entity";
-import { UserModule } from "./user/user.module";
 import { Collection } from "./collection/collection.entity";
 import { Category } from "./category/category.entity";
 import { StockModule } from "./stock/stock.module";
+import { ColorModule } from "./color/color.module";
+import { DiscountModule } from "./discount/discount.module";
+import { UserModule } from "./user/user.module";
+import { OrderItemsModule } from "./order-item/order-items.module";
 
 @Module({
   imports: [
@@ -37,11 +40,10 @@ import { StockModule } from "./stock/stock.module";
         Product,
         Stock,
         Color,
-        Media,
+        File,
         Discount,
         Order,
         OrderItem,
-        Cart,
         CartItem,
         User,
         Collection,
@@ -55,9 +57,14 @@ import { StockModule } from "./stock/stock.module";
     StockModule,
     MediaModule,
     ColorModule,
-    CartModule,
     DiscountModule,
     UserModule,
+    CartItemsModule,
+    CategoryModule,
+    CollectionModule,
+    ModelModule,
+    OrderItemsModule,
+    // UsersModule,
   ],
   controllers: [],
   providers: [],
