@@ -4,13 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRole } from "src/enums";
-import { OneToOne } from "typeorm";
-import { Cart } from "src/carts/carts.model";
-import { OneToMany } from "typeorm";
-import { Order } from "src/orders/orders.model";
+import { CartItems } from "src/cart-items/cart-items.entity";
 
 @Entity({ name: "users" })
 export class User {
@@ -43,9 +41,6 @@ export class User {
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
 
-  @OneToOne(() => Cart)
-  cart: Cart;
-
-  @OneToMany(() => Order, (orders) => orders.user)
-  orders: Order[];
+  @OneToMany(() => CartItems, (cartItems) => cartItems.user)
+  cartItems: CartItems[];
 }

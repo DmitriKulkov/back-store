@@ -3,12 +3,16 @@ import { ConfigModule } from "@nestjs/config";
 import { ProductsModule } from "./products/products.module";
 import { Product } from "./products/product.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { StocksModule } from "./stocks/stocks.module";
-import { Stock } from "./stocks/stock.entity";
-import { MediaModule } from "./media/media.module";
-import { ColorModule } from "./color/color.module";
+import { MediaModule } from "./file/file.module";
 import { Color } from "./color/color.entity";
-import { Media } from "./media/media.entity";
+import { File } from "./file/file.entity";
+import { CartItemsModule } from "./cart-items/cart-items.module";
+import { CategoryModule } from "./category/category.module";
+import { CollectionModule } from "./collection/collection.module";
+import { ModelModule } from "./model/model.module";
+import { OrderItemsModule } from "./order-items/order-items.module";
+import { Stock } from "./stocks/stock.entity";
+import { StocksModule } from "./stocks/stocks.module";
 
 @Module({
   imports: [
@@ -22,7 +26,7 @@ import { Media } from "./media/media.entity";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [Product, Stock, Color, Media],
+      entities: [Product, Stock, Color, File],
       synchronize: true,
       autoLoadEntities: true,
       logging: true,
@@ -30,7 +34,11 @@ import { Media } from "./media/media.entity";
     ProductsModule,
     StocksModule,
     MediaModule,
-    ColorModule,
+    CartItemsModule,
+    CategoryModule,
+    CollectionModule,
+    ModelModule,
+    OrderItemsModule,
     // UsersModule,
   ],
   controllers: [],

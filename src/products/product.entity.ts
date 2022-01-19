@@ -1,11 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+} from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stocks/stock.entity";
-import { Collection } from "typeorm";
 import { ManyToOne } from "typeorm";
 import { JoinColumn } from "typeorm";
-import { ProductCategories } from "src/product-categories/product-categories.entity";
-import { Media } from "../media/media.entity";
+
+import { Model } from "src/model/model.entity";
+import { Color } from "src/color/color.entity";
+import { File } from "../file/file.entity";
+import { Discount } from "src/discount/discount.entity";
 
 @Entity({ name: "products" })
 export class Product {
@@ -13,33 +21,13 @@ export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: "From da hood T-shirt", description: "product name" })
-  @Column({ type: "varchar", length: 30 })
-  name: string;
-
-  @ApiProperty({ example: "neznayou", description: "unique link" })
-  @Column({ type: "varchar", length: 30, unique: true })
-  slug: string;
-
-  @ApiProperty({ example: 3000, description: "price" })
-  @Column({ type: "double precision" })
+  @ApiProperty({ example: "9.99", description: "Product Price" })
+  @Column({ type: "money", nullable: false })
   price: number;
 
-  @ApiProperty({
-    example:
-      "This t-shirt started from da bottom. only ... wear these rare items",
-    description: "description",
-  })
-  @Column({ type: "text", nullable: true })
-  description: string;
-
-  @ApiProperty({ example: "xzxzxzzzz", description: "sale start date" })
-  @Column({ type: "bool", default: false, name: "published_at" })
-  released: boolean;
-
-  @ApiProperty({ example: 1000, description: "discount" })
-  @Column({ type: "double precision", nullable: true })
-  discount: number;
+  @ManyToOne(() => Model, (model) => model.products)
+  @JoinColumn({ name: "model_id" })
+  model: Model;
 
   @ApiProperty({ example: "21/22", description: "discount start date" })
   @Column({ type: "timestamp", nullable: true, name: "starts_at" })
@@ -52,16 +40,13 @@ export class Product {
   @OneToMany(() => Stock, (stock) => stock.productId)
   stocks: Stock[];
 
-  @ManyToOne(() => Collection, (collection) => collection.products)
-  @JoinColumn({ name: "collection_id" })
-  collection: Collection;
+  @OneToMany(() => File, (files) => files.product)
+  files: File[];
 
-  @ManyToOne(
-    () => ProductCategories,
-    (product_category) => product_category.products,
-  )
-  @JoinColumn({ name: "category_id" })
-  product_category: ProductCategories;
-  @OneToMany(() => Media, (media) => media.productId)
-  media: Media[];
+  @OneToOne(() => Discount, (discount) => discount.product)
+  discount: Discount;
+
+  @ManyToOne(() => Color, (color) => color.products)
+  @JoinColumn({ name: "color_id" })
+  color: Color;
 }

@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Product } from "src/products/product.entity";
+
+import { Model } from "src/model/model.entity";
 
 @Entity({ name: "collection" })
 export class User {
@@ -22,6 +23,6 @@ export class User {
   @Column({ type: "text", nullable: true })
   description: string;
 
-  @OneToMany(() => Product, (products) => products.collection)
-  products: Product[];
+  @OneToMany(() => Model, (models) => models.collection)
+  models: Model[];
 }

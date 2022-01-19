@@ -7,10 +7,9 @@ import {
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Product } from "src/products/product.entity";
-import { Color } from "src/color/color.entity";
 
-@Entity({ name: "media" })
-export class Media {
+@Entity({ name: "file" })
+export class File {
   @ApiProperty({ example: "1", description: "unique id" })
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,17 +18,10 @@ export class Media {
   @Column({ type: "varchar", length: 30 })
   name: string;
 
-  @ManyToOne(() => Product, (product) => product, {
+  @ManyToOne(() => Product, (product) => product.files, {
     primary: true,
     onDelete: "CASCADE",
   })
   @JoinColumn({ name: "product_id" })
-  productId: Product;
-
-  @ManyToOne(() => Color, (color) => color.media, {
-    primary: true,
-    onDelete: "CASCADE",
-  })
-  @JoinColumn({ name: "color_id" })
-  colorId: Color;
+  product: Product;
 }

@@ -1,7 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { Media } from "src/media/media.entity";
-import { Stock } from "src/stocks/stock.entity";
+import { Product } from "src/products/product.entity";
 
 @Entity({ name: "colors" })
 export class Color {
@@ -13,9 +12,10 @@ export class Color {
   @Column({ type: "varchar", length: 30 })
   name: string;
 
-  @OneToMany(() => Media, (media) => media.colorId)
-  media: Media[];
+  @ApiProperty({ example: "#ffffff", description: "color hex code" })
+  @Column({ type: "varchar", length: 7, unique: true })
+  hex: string;
 
-  @OneToMany(() => Stock, (stock) => stock.colorId)
-  stocks: Stock[];
+  @OneToMany(() => Product, (products) => products.color)
+  products: Product[];
 }
