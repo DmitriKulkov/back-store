@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
-import { CartItemsController } from './cart-items.controller';
-import { CartItemsService } from './cart-items.service';
+import { Module } from "@nestjs/common";
+import { CartItemsController } from "./cart-items.controller";
+import { CartItemsService } from "./cart-items.service";
 
 @Module({
   controllers: [CartItemsController],
-  providers: [CartItemsService]
+  providers: [CartItemsService],
 })
-export class CartItemsModule {}
+export class CartItemModule {}

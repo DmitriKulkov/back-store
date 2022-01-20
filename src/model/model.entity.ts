@@ -11,7 +11,7 @@ import { Collection } from "src/collection/collection.entity";
 import { Product } from "src/product/product.entity";
 import { Category } from "src/category/category.entity";
 
-@Entity({ name: "model" })
+@Entity({ name: "models" })
 export class Model {
   @PrimaryGeneratedColumn()
   id: number;
@@ -35,14 +35,14 @@ export class Model {
   @Column({ type: "boolean", nullable: false })
   released: boolean;
 
-  @ManyToOne(() => Collection, (collection) => collection.models)
-  @JoinColumn({ name: "collection_id" })
-  collection: Collection;
-
   @OneToMany(() => Product, (products) => products.model)
   products: Product[];
 
   @ManyToOne(() => Category, (category) => category.models)
   @JoinColumn({ name: "category_id" })
   category: Category;
+
+  @ManyToOne(() => Collection, (collection) => collection.models)
+  @JoinColumn({ name: "collection_id" })
+  collection: Collection;
 }

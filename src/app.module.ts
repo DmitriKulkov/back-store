@@ -6,7 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { MediaModule } from "./file/file.module";
 import { Color } from "./color/color.entity";
 import { File } from "./file/file.entity";
-import { CartItemsModule } from "./cart-items/cart-items.module";
+import { CartItemModule } from "./cart-items/cart-items.module";
 import { CategoryModule } from "./category/category.module";
 import { CollectionModule } from "./collection/collection.module";
 import { ModelModule } from "./model/model.module";
@@ -23,6 +23,7 @@ import { ColorModule } from "./color/color.module";
 import { DiscountModule } from "./discount/discount.module";
 import { UserModule } from "./user/user.module";
 import { OrderItemsModule } from "./order-item/order-items.module";
+import { Model } from "./model/model.entity";
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { OrderItemsModule } from "./order-item/order-items.module";
         User,
         Collection,
         Category,
+        Model,
       ],
       synchronize: true,
       autoLoadEntities: true,
@@ -59,7 +61,7 @@ import { OrderItemsModule } from "./order-item/order-items.module";
     ColorModule,
     DiscountModule,
     UserModule,
-    CartItemsModule,
+    CartItemModule,
     CategoryModule,
     CollectionModule,
     ModelModule,

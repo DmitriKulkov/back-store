@@ -20,7 +20,7 @@ export class ProductController {
 
   @Get("/sellable")
   getAllSellable() {
-    return this.productService.getAllSellable();
+    return this.productService.getAllReleased();
   }
 
   @Get("/:id")

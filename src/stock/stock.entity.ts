@@ -14,7 +14,7 @@ import { OrderItem } from "src/order-item/order-item.entity";
 import { CartItem } from "src/cart-items/cart-item.entity";
 
 @Entity({ name: "stocks" })
-@Unique("stocks_product_id_size_color_id_key", ["color", "size", "product"])
+@Unique("stocks_product_id_size__key", ["size", "product"])
 export class Stock {
   @ApiProperty({ example: "1", description: "unique id" })
   @PrimaryGeneratedColumn()

@@ -8,7 +8,7 @@ import {
 import { ApiProperty } from "@nestjs/swagger";
 import { Product } from "src/product/product.entity";
 
-@Entity({ name: "file" })
+@Entity({ name: "files" })
 export class File {
   @ApiProperty({ example: "1", description: "unique id" })
   @PrimaryGeneratedColumn()
