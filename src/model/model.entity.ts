@@ -20,7 +20,7 @@ export class Model {
   @Column({ type: "varchar", length: 50, nullable: false })
   name: string;
 
-  @ApiProperty({ example: "T-shirt Mk. 1", description: "Product model" })
+  @ApiProperty({ example: "t-shirt-mk-1", description: "Product slug" })
   @Column({ type: "varchar", length: 100, nullable: false })
   slug: string;
 

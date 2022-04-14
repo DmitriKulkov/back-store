@@ -6,8 +6,11 @@ import {
   Delete,
   Param,
   Post,
+  Req,
+  Query,
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
+import { Request } from "express";
 
 @Controller("products")
 export class ProductController {
@@ -41,5 +44,11 @@ export class ProductController {
   @Delete("/:id")
   delete(@Param("id") id: number) {
     return this.productService.delete(id);
+  }
+
+  @Get("/collection/:collection")
+  getProductsByCollection(@Param("collection") collection: String, @Query() que){
+    console.log("Yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + " limit=" + que._limit + " page=" + que._page + " collection=" + collection)
+    return this.productService.getByCollection(collection, que)
   }
 }

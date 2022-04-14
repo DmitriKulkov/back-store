@@ -12,7 +12,7 @@ export class Collection {
     example: "2020 Autumn Collection",
     description: "Collection Name",
   })
-  @Column({ type: "varchar", unique: true, nullable: true })
+  @Column({ type: "varchar", unique: true, nullable: false })
   name: string;
 
   @ApiProperty({
@@ -21,6 +21,13 @@ export class Collection {
   })
   @Column({ type: "text", nullable: true })
   description: string;
+
+  @ApiProperty({
+    example: "2020-summer-collection",
+    description: "Collection Slug",
+  })
+  @Column({ type: "varchar", unique: true, nullable: false })
+  slug: string;
 
   @OneToMany(() => Model, (models) => models.collection)
   models: Model[];

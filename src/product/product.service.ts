@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { ModelService } from "src/model/model.service";
 import { Repository } from "typeorm";
+import { Request, query } from "express";
 
 import { Product } from "./product.entity";
 
@@ -8,11 +10,12 @@ import { Product } from "./product.entity";
 export class ProductService {
   constructor(
     @InjectRepository(Product) private productsRepo: Repository<Product>,
+    private modelService: ModelService
   ) {}
 
   async getAll() {
     const products = await this.productsRepo.find({
-      relations: ["discount"],
+      relations: ["discount", "model", "color", "files"],
     });
     return products;
   }
@@ -63,5 +66,17 @@ export class ProductService {
     }
     await this.productsRepo.delete(id);
     return p;
+  }
+
+  async getByCollection(collection: String, que){
+    const model = this.modelService.getByCollection(collection)
+    const p = this.productsRepo.find({
+      where: {model}, 
+      relations: ["discount", "model", "color", "files"],
+      take: que._limit,
+      skip: que._page * que._limit 
+    })
+
+    return p
   }
 }

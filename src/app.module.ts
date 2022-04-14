@@ -66,7 +66,6 @@ import { Model } from "./model/model.entity";
     CollectionModule,
     ModelModule,
     OrderItemsModule,
-    // UsersModule,
   ],
   controllers: [],
   providers: [],

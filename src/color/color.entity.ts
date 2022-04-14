@@ -17,7 +17,7 @@ export class Color {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: "YELLOW", description: "color name" })
+  @ApiProperty({ example: "WHITE", description: "color name" })
   @Column({
     type: "varchar",
     length: 30,

@@ -16,3 +16,4 @@ export class Category {
   @OneToMany(() => Model, (models) => models.category)
   models: Model[];
 }
+  

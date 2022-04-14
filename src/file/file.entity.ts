@@ -14,9 +14,13 @@ export class File {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: "YELLOW", description: "color name" })
+  @ApiProperty({ example: "t-shirt-1", description: "name" })
   @Column({ type: "varchar", length: 30 })
   name: string;
+
+  @ApiProperty({ example: "data:image/jpeg;base64,ZmlsZTovLy9ob21lL3NpbXBsZXBjL1BpY3R1cmVzLzExNTYwOTc3LTIuanBnCg==", description: "BASE64 encoded image"})
+  @Column({ type: "text"})
+  encoded_img: string;
 
   @ManyToOne(() => Product, (product) => product.files, {
     primary: true,
