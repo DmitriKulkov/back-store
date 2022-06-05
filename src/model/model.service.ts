@@ -10,7 +10,7 @@ export class ModelService {
         @InjectRepository(Model) private modelRepository: Repository<Model>,
         private collectionService: CollectionService
     ){}
-    async getByCollection(slug:String){
+    async getByCollection(slug:string){
         const collection = this.collectionService.getBySlug(slug)
         const p = await this.modelRepository.find({
             where: {collection}

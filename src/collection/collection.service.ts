@@ -7,7 +7,12 @@ import { Collection } from './collection.entity';
 export class CollectionService {
     constructor(@InjectRepository(Collection) private collectionRepository: Repository<Collection>){}
 
-    async getBySlug(slug: String){
+    async getAll() {
+        const c = await  this.collectionRepository.find()
+        return c;
+    }
+
+    async getBySlug(slug: string){
         const c = await this.collectionRepository.findOne({
             where: {slug}
         })

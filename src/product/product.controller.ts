@@ -17,8 +17,8 @@ export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get("/")
-  getAll() {
-    return this.productService.getAll();
+  getAll(@Query() que) {
+    return this.productService.getAll(que);
   }
 
   @Get("/sellable")
@@ -47,7 +47,7 @@ export class ProductController {
   }
 
   @Get("/collection/:collection")
-  getProductsByCollection(@Param("collection") collection: String, @Query() que){
+  getProductsByCollection(@Param("collection") collection: string, @Query() que){
     console.log("Yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + " limit=" + que._limit + " page=" + que._page + " collection=" + collection)
     return this.productService.getByCollection(collection, que)
   }

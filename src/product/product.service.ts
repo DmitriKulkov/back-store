@@ -1,22 +1,61 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ModelService } from "src/model/model.service";
-import { Repository } from "typeorm";
+import {Between, In, Like, Repository} from "typeorm";
 import { Request, query } from "express";
 
 import { Product } from "./product.entity";
+import {ColorService} from "../color/color.service";
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(Product) private productsRepo: Repository<Product>,
-    private modelService: ModelService
+    private modelService: ModelService,
+    private colorService: ColorService
   ) {}
 
-  async getAll() {
+  async getAll(que:{
+    _limit?: number,//
+    _page?: number,//
+    _name?: string,
+    _sortPrice?: -1 | 1,//
+    _priceFloor?: number,//
+    _priceTop?: number,//
+    _collection?: string,//
+    _cColors?: string[],//
+  }) {
+    const colors = que._cColors && que._cColors !== []? que._cColors: (await this.colorService.getAll()).map((color)=>color.name);
+    console.log(colors);
+    const limit = que._limit?que._limit:100;
+    console.log(limit)
+    const page = que._page?que._page:0;
+    console.log(page)
+    const name = que._name?que._name:"";
+    console.log(name)
+    const order = que._sortPrice !== 1?'DESC':'ASC';
+    console.log(order)
+    const priceFloor = que._priceFloor?que._priceFloor:0;
+    console.log(priceFloor)
+    const priceTop = que._priceTop?que._priceTop:10000;
+    console.log(priceTop)
+    const collection = que._collection?que._collection:"";
+    console.log(collection)
     const products = await this.productsRepo.find({
-      relations: ["discount", "model", "color", "files"],
+      relations: ['discount', 'model', 'model.collection', 'color', 'files'],
+      where: {
+        price: Between(priceFloor, priceTop),
+        model: {
+          collection: {slug: Like('%' + collection + '%')},
+          name: Like('%' + name + '%'),
+        },
+        color: {name: In(colors)}
+      },
+      order: {price: order},
+      take: limit,
+      skip: page * limit,
     });
+
     return products;
   }
 
@@ -68,7 +107,7 @@ export class ProductService {
     return p;
   }
 
-  async getByCollection(collection: String, que){
+  async getByCollection(collection: string, que){
     const model = this.modelService.getByCollection(collection)
     const p = this.productsRepo.find({
       where: {model}, 

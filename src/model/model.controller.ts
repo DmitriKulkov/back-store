@@ -6,7 +6,7 @@ export class ModelController {
     constructor(private modelService: ModelService){}
 
     @Get("/:collection")
-    findByCollection(@Param("collection") collection: String){
+    findByCollection(@Param("collection") collection: string){
         return this.modelService.getByCollection(collection);
     }
 }
