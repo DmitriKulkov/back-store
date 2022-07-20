@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ModelService } from "src/model/model.service";
 import {Between, In, Like, Repository} from "typeorm";
-import { Request, query } from "express";
+import { Response } from "express";
 
 import { Product } from "./product.entity";
 import {ColorService} from "../color/color.service";
@@ -23,8 +23,13 @@ export class ProductService {
     _priceFloor?: number,//
     _priceTop?: number,//
     _collection?: string,//
-    _cColors?: string[],//
-  }) {
+    _cColors?: string[],
+    _category?: string,
+               },
+               res: Response) {
+    this.productsRepo.query('SELECT count(*) FROM products').then(function (num) {
+      res.set({ 'x-total-count': num[0].count });
+    });
     const colors = que._cColors && que._cColors !== []? que._cColors: (await this.colorService.getAll()).map((color)=>color.name);
     console.log(colors);
     const limit = que._limit?que._limit:100;
@@ -33,7 +38,8 @@ export class ProductService {
     console.log(page)
     const name = que._name?que._name:"";
     console.log(name)
-    const order = que._sortPrice !== 1?'DESC':'ASC';
+    const order = que._sortPrice != 1?'DESC':'ASC';
+    console.log(que._sortPrice)
     console.log(order)
     const priceFloor = que._priceFloor?que._priceFloor:0;
     console.log(priceFloor)
@@ -41,13 +47,17 @@ export class ProductService {
     console.log(priceTop)
     const collection = que._collection?que._collection:"";
     console.log(collection)
+    const  category = que._category?que._category:"";
     const products = await this.productsRepo.find({
-      relations: ['discount', 'model', 'model.collection', 'color', 'files'],
+      relations: ['discount', 'model', 'model.collection', 'color', 'files', 'model.category'],
       where: {
         price: Between(priceFloor, priceTop),
         model: {
           collection: {slug: Like('%' + collection + '%')},
           name: Like('%' + name + '%'),
+          category: {
+            name: Like('%' + category + '%')
+          }
         },
         color: {name: In(colors)}
       },
@@ -74,7 +84,7 @@ export class ProductService {
   async getOne(id: number) {
     const product = await this.productsRepo.findOne(id);
     if (!product) {
-      throw new HttpException("user not found", HttpStatus.NOT_FOUND);
+      throw new HttpException("product not found", HttpStatus.NOT_FOUND);
     }
     return product;
   }
@@ -107,7 +117,7 @@ export class ProductService {
     return p;
   }
 
-  async getByCollection(collection: string, que){
+  async getByCollection(collection: string, que){ // TODO: replace model service with typeorm
     const model = this.modelService.getByCollection(collection)
     const p = this.productsRepo.find({
       where: {model}, 
@@ -116,6 +126,18 @@ export class ProductService {
       skip: que._page * que._limit 
     })
 
+    return p
+  }
+
+  async getBySlug(slug: string){
+    const p = await this.productsRepo.findOne({
+      relations: ['discount', 'model', 'model.collection', 'color', 'files', 'model.category'],
+      where: {
+        model:{
+          slug: slug
+        }
+      }
+    })
     return p
   }
 }

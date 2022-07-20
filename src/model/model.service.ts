@@ -17,4 +17,14 @@ export class ModelService {
         })
         return p
     }
+
+    async getBySlug(slug: string){
+        const p = await this.modelRepository.findOne({
+            relations: ['product.discount', 'product', 'model.collection', 'product.color', 'product.files', 'category'],
+            where: {
+                slug: slug
+            }
+        })
+        return p
+    }
 }

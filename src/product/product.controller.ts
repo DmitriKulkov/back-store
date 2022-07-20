@@ -8,17 +8,21 @@ import {
   Post,
   Req,
   Query,
+  Response
 } from "@nestjs/common";
 import { ProductService } from "./product.service";
-import { Request } from "express";
+import { Response as Res } from 'express';
 
 @Controller("products")
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get("/")
-  getAll(@Query() que) {
-    return this.productService.getAll(que);
+  getAll(@Query() que, @Response() res: Res) {
+    // return this.productService.getAll(que);
+    this.productService.getAll(que, res).then((p) => {
+      return res.send(p);
+    });
   }
 
   @Get("/sellable")
@@ -48,7 +52,11 @@ export class ProductController {
 
   @Get("/collection/:collection")
   getProductsByCollection(@Param("collection") collection: string, @Query() que){
-    console.log("Yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + " limit=" + que._limit + " page=" + que._page + " collection=" + collection)
-    return this.productService.getByCollection(collection, que)
+    return this.productService.getByCollection(collection, que);
+  }
+
+  @Get("/slug/:slug")
+  getBySlug(@Param("slug") slug: string){
+    return this.productService.getBySlug(slug);
   }
 }

@@ -9,5 +9,10 @@ export class ModelController {
     findByCollection(@Param("collection") collection: string){
         return this.modelService.getByCollection(collection);
     }
+
+    @Get("/slug/:slug")
+    findBySlug(@Param("slug") slug: string){
+        return this.modelService.getBySlug(slug);
+    }
 }
     
