@@ -3,7 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  OneToOne,
+  OneToOne, ManyToMany, JoinTable,
 } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { Stock } from "src/stock/stock.entity";
@@ -46,7 +46,11 @@ export class Product {
   @OneToOne(() => Discount, (discount) => discount.product)
   discount: Discount;
 
-  @ManyToOne(() => Color, (color) => color.products)
-  @JoinColumn({ name: "color_id" })
-  color: Color;
+  // @ManyToOne(() => Color, (color) => color.products)
+  // @JoinColumn({ name: "color_id" })
+  // color: Color;
+
+  @ManyToMany(()=>Color)
+  @JoinTable()
+  color: Color[]
 }

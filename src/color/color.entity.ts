@@ -29,6 +29,6 @@ export class Color {
   @Column({ type: "varchar", length: 7, unique: true })
   hex: string;
 
-  @OneToMany(() => Product, (products) => products.color)
-  products: Product[];
+  // @OneToMany(() => Product, (products) => products.color)
+  // products: Product[];
 }

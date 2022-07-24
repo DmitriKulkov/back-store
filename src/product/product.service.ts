@@ -59,14 +59,15 @@ export class ProductService {
             name: Like('%' + category + '%')
           }
         },
-        color: {name: In(colors)}
+        // color: {name: In(colors)}
       },
       order: {price: order},
       take: limit,
       skip: page * limit,
     });
 
-    return products;
+
+    return products.filter(product=>product.color.filter(c => colors.includes(c.name)).length != 0);
   }
 
   async getAllReleased() {
