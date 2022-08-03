@@ -24,6 +24,32 @@ import { DiscountModule } from "./discount/discount.module";
 import { UserModule } from "./user/user.module";
 import { OrderItemsModule } from "./order-item/order-items.module";
 import { Model } from "./model/model.entity";
+import * as PostgresConnectionStringParser from 'pg-connection-string';
+
+const dbProps = () => {
+  const connectionOptions = process.env.CONNECTION_URL != '0'
+      ? PostgresConnectionStringParser.parse(process.env.DATABASE_URL)
+      : null;
+  let res;
+  process.env.CONNECTION_URL
+      ? (res = {
+        type: 'postgres',
+        host: process.env.DB_HOST,
+        port: parseInt(process.env.DB_PORT),
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+      })
+      : (res = {
+        type: 'postgres',
+        host: connectionOptions.host,
+        port: parseInt(connectionOptions.port),
+        username: connectionOptions.user,
+        password: connectionOptions.password,
+        database: connectionOptions.database,
+      });
+  return res;
+};
 
 @Module({
   imports: [
@@ -31,12 +57,7 @@ import { Model } from "./model/model.entity";
       envFilePath: `.${process.env.NODE_ENV}.env`,
     }),
     TypeOrmModule.forRoot({
-      type: "postgres",
-      host: process.env.POSTGRES_HOST,
-      port: +process.env.POSTGRES_PORT,
-      username: process.env.POSTGRES_USER,
-      password: "root", //process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
+      ...dbProps(),
       entities: [
         Product,
         Stock,
