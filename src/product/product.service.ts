@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ModelService } from "src/model/model.service";
-import {Between, In, Like, Repository} from "typeorm";
+import {Between, ILike, In, Like, Repository} from "typeorm";
 import { Response } from "express";
 
 import { Product } from "./product.entity";
@@ -18,7 +18,7 @@ export class ProductService {
   async getAll(que:{
     _limit?: number,//
     _page?: number,//
-    _name?: string,
+    _search?: string,
     _sortPrice?: -1 | 1,//
     _priceFloor?: number,//
     _priceTop?: number,//
@@ -36,8 +36,8 @@ export class ProductService {
     console.log(limit)
     const page = que._page?que._page:0;
     console.log(page)
-    const name = que._name?que._name:"";
-    console.log(name)
+    const search = que._search?que._search:"";
+    console.log(search)
     const order = que._sortPrice != 1?'DESC':'ASC';
     console.log(que._sortPrice)
     console.log(order)
@@ -54,7 +54,7 @@ export class ProductService {
         price: Between(priceFloor, priceTop),
         model: {
           collection: {slug: Like('%' + collection + '%')},
-          name: Like('%' + name + '%'),
+          name: ILike('%' + search + '%'),
           category: {
             name: Like('%' + category + '%')
           }
@@ -66,8 +66,7 @@ export class ProductService {
       skip: page * limit,
     });
 
-
-    return products.filter(product=>product.color.filter(c => colors.includes(c.name)).length != 0);
+    return products.filter(product=>product.color.filter(c => colors.includes(c.name)).length != 0)
   }
 
   async getAllReleased() {
