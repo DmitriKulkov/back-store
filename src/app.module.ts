@@ -30,8 +30,9 @@ const dbProps = () => {
   const connectionOptions = process.env.CONNECTION_URL != '0'
       ? PostgresConnectionStringParser.parse(process.env.DATABASE_URL)
       : null;
+  console.log(process.env.CONNECTION_URL != '0')
   let res;
-  process.env.CONNECTION_URL
+  process.env.CONNECTION_URL == '0'
       ? (res = {
         type: 'postgres',
         host: process.env.DB_HOST,
