@@ -12,3 +12,9 @@ export enum Size {
   L = "L",
   XL = "XL",
 }
+
+export enum GlobalCategory{
+  Clothes = "clothes",
+  Shoes = "shoes",
+  Accessories = "accessories",
+}

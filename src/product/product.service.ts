@@ -25,29 +25,22 @@ export class ProductService {
     _collection?: string,//
     _cColors?: string[],
     _category?: string,
+    _globCat?: string
                },
                res: Response) {
     this.productsRepo.query('SELECT count(*) FROM products').then(function (num) {
       res.set({ 'x-total-count': num[0].count });
     });
     const colors = que._cColors && que._cColors !== []? que._cColors: (await this.colorService.getAll()).map((color)=>color.name);
-    console.log(colors);
     const limit = que._limit?que._limit:100;
-    console.log(limit)
     const page = que._page?que._page:0;
-    console.log(page)
     const search = que._search?que._search:"";
-    console.log(search)
     const order = que._sortPrice != 1?'DESC':'ASC';
-    console.log(que._sortPrice)
-    console.log(order)
     const priceFloor = que._priceFloor?que._priceFloor:0;
-    console.log(priceFloor)
     const priceTop = que._priceTop?que._priceTop:10000;
-    console.log(priceTop)
     const collection = que._collection?que._collection:"";
-    console.log(collection)
     const  category = que._category?que._category:"";
+    const  globCat = que._globCat?que._globCat:"";
     const products = await this.productsRepo.find({
       relations: ['discount', 'model', 'model.collection', 'color', 'files', 'model.category'],
       where: {
@@ -56,7 +49,7 @@ export class ProductService {
           collection: {slug: Like('%' + collection + '%')},
           name: ILike('%' + search + '%'),
           category: {
-            name: Like('%' + category + '%')
+            name: Like('%' + category + '%'),
           }
         },
         // color: {name: In(colors)}
@@ -66,7 +59,11 @@ export class ProductService {
       skip: page * limit,
     });
 
-    return products.filter(product=>product.color.filter(c => colors.includes(c.name)).length != 0)
+    const globFilter = (globCat && globCat != "")?products.filter(product=>product.model.category.globCat == globCat):products
+    console.log(globCat)
+    console.log(globFilter.length)
+    const colorFilter = globFilter.filter(product=>product.color.filter(c => colors.includes(c.name)).length != 0)
+    return colorFilter
   }
 
   async getAllReleased() {
