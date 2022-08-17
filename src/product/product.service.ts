@@ -60,8 +60,6 @@ export class ProductService {
     });
 
     const globFilter = (globCat && globCat != "")?products.filter(product=>product.model.category.globCat == globCat):products
-    console.log(globCat)
-    console.log(globFilter.length)
     const colorFilter = globFilter.filter(product=>product.color.filter(c => colors.includes(c.name)).length != 0)
     return colorFilter
   }

@@ -13,4 +13,13 @@ export class CategoryService {
         const cat = await this.categoryRepo.find()
         return cat
     }
+
+    async getByGCategory(globCat: string){
+        const cat = await this.categoryRepo.find({
+            where:{
+                globCat: globCat
+            }
+        })
+        return cat
+    }
 }
