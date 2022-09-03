@@ -28,9 +28,9 @@ export class ProductService {
     _globCat?: string
                },
                res: Response) {
-    this.productsRepo.query('SELECT count(*) FROM products').then(function (num) {
-      res.set({ 'x-total-count': num[0].count });
-    });
+    // this.productsRepo.query('SELECT count(*) FROM products').then(function (num) {
+    //   res.set({ 'x-total-count': num[0].count });
+    // });
     const colors = que._cColors && que._cColors !== []? que._cColors: (await this.colorService.getAll()).map((color)=>color.name);
     const limit = que._limit?que._limit:100;
     const page = que._page?que._page:0;
@@ -39,10 +39,10 @@ export class ProductService {
     const priceFloor = que._priceFloor?que._priceFloor:0;
     const priceTop = que._priceTop?que._priceTop:10000;
     const collection = que._collection?que._collection:"";
-    const  category = que._category?que._category:"";
-    const  globCat = que._globCat?que._globCat:"";
+    const category = que._category?que._category:"";
+    const globCat = que._globCat?que._globCat:"";
     const products = await this.productsRepo.find({
-      relations: ['discount', 'model', 'model.collection', 'color', 'files', 'model.category'],
+      relations: ['discount', 'model', 'model.collection', 'files', 'color', 'model.category'],
       where: {
         price: Between(priceFloor, priceTop),
         model: {
@@ -55,13 +55,15 @@ export class ProductService {
         // color: {name: In(colors)}
       },
       order: {price: order},
-      take: limit,
-      skip: page * limit,
+      // take: limit,
+      // skip: page * limit,
     });
 
     const globFilter = (globCat && globCat != "")?products.filter(product=>product.model.category.globCat == globCat):products
     const colorFilter = globFilter.filter(product=>product.color.filter(c => colors.includes(c.name)).length != 0)
-    return colorFilter
+    res.set({ 'x-total-count': colorFilter.length });
+    const result = colorFilter.slice(page * limit, page * limit + limit * 1)
+    return result
   }
 
   async getAllReleased() {
